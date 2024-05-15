@@ -21,6 +21,8 @@ func Execute() {
 }
 
 func init() {
+	// go run main.go server1
 	rootCmd.AddCommand(server1Cmd)
+	// go run main.go server2
 	rootCmd.AddCommand(server2Cmd)
 }

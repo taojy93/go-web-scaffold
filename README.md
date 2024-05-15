@@ -14,12 +14,26 @@ go-web-scaffold/
 │   ├── database/
 │   │   ├── database.go
 │   │   └── redis.go
+│   ├── errors/
+│   │   └── codes.go
+│   ├── handlers/
+│   │   ├── handlers.go
+│   │   └── user_handler.go
 │   ├── kafka/
 │   │   └── kafka.go
 │   ├── logging/
 │   │   └── logging.go
-│   └── handlers/
-│       └── handlers.go
+│   ├── models/
+│   │   └── user.go
+│   ├── repository/
+│   │   └── user_repository.go
+│   ├── response/
+│   │   └── response.go
+│   ├── service/
+│   │   └── user_service.go
+│   └── utils/
+│       └── utils.go
 ├── main.go
 └── go.mod
+
 ```
