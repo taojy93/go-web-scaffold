@@ -6,6 +6,7 @@ import (
 	"go-web-scaffold/internal/handlers"
 	"go-web-scaffold/internal/kafka"
 	"go-web-scaffold/internal/logging"
+	"go-web-scaffold/internal/middleware"
 	"go-web-scaffold/internal/repository"
 	"go-web-scaffold/internal/service"
 
@@ -44,7 +45,7 @@ var server2Cmd = &cobra.Command{
 			newsGroup := v1.Group("/news")
 			{
 				newsGroup.POST("/", newsHandler.CreateNews)
-				newsGroup.GET("/:id", newsHandler.GetNewsByID)
+				newsGroup.GET("/:id", newsHandler.GetNewsByID).Use(middleware.LimitMiddleware)
 				newsGroup.GET("/", newsHandler.GetAllNews)
 				newsGroup.PUT("/", newsHandler.UpdateNews)
 				newsGroup.DELETE("/:id", newsHandler.DeleteNews)

@@ -21,13 +21,13 @@ type Config struct {
 func LoadConfig() *Config {
 	viper.AutomaticEnv()
 
-	viper.SetDefault("SERVER1_ADDR", ":4001")
-	viper.SetDefault("SERVER2_ADDR", ":4002")
-	viper.SetDefault("MYSQL_DSN", "user:password@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local")
-	viper.SetDefault("REDIS_ADDR", "localhost:6379")
-	viper.SetDefault("REDIS_PASSWORD", "")
-	viper.SetDefault("REDIS_DB", 0)
-	viper.SetDefault("KAFKA_BROKERS", "localhost:9092")
+	// viper.SetDefault("SERVER1_ADDR", ":4001")
+	// viper.SetDefault("SERVER2_ADDR", ":4002")
+	// viper.SetDefault("MYSQL_DSN", "root:root@tcp(127.0.0.1:3306)/antiy_license?charset=utf8mb4&parseTime=True&loc=Local")
+	// viper.SetDefault("REDIS_ADDR", "localhost:6379")
+	// viper.SetDefault("REDIS_PASSWORD", "root")
+	// viper.SetDefault("REDIS_DB", 0)
+	// viper.SetDefault("KAFKA_BROKERS", "localhost:9092")
 
 	config := &Config{
 		Server1Addr:   viper.GetString("SERVER1_ADDR"),
