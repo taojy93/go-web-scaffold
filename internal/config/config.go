@@ -4,6 +4,7 @@ package config
 import (
 	"go-web-scaffold/internal/logging"
 	"log"
+	"time"
 
 	"github.com/spf13/viper"
 )
@@ -16,18 +17,19 @@ type Config struct {
 	RedisPassword string
 	RedisDB       int
 	KafkaBrokers  []string
+
+	RateLimitConfig
+}
+
+type RateLimitConfig struct {
+	WindowsSize  time.Duration
+	BucketCount  int
+	RequestLimit int
 }
 
 func LoadConfig() *Config {
-	viper.AutomaticEnv()
 
-	// viper.SetDefault("SERVER1_ADDR", ":4001")
-	// viper.SetDefault("SERVER2_ADDR", ":4002")
-	// viper.SetDefault("MYSQL_DSN", "root:root@tcp(127.0.0.1:3306)/antiy_license?charset=utf8mb4&parseTime=True&loc=Local")
-	// viper.SetDefault("REDIS_ADDR", "localhost:6379")
-	// viper.SetDefault("REDIS_PASSWORD", "root")
-	// viper.SetDefault("REDIS_DB", 0)
-	// viper.SetDefault("KAFKA_BROKERS", "localhost:9092")
+	viper.AutomaticEnv()
 
 	config := &Config{
 		Server1Addr:   viper.GetString("SERVER1_ADDR"),
@@ -38,6 +40,9 @@ func LoadConfig() *Config {
 		RedisDB:       viper.GetInt("REDIS_DB"),
 		KafkaBrokers:  viper.GetStringSlice("KAFKA_BROKERS"),
 	}
+	config.WindowsSize = viper.GetDuration("WINDOWS_SIZE")
+	config.BucketCount = viper.GetInt("BUCKET_COUNT")
+	config.RequestLimit = viper.GetInt("REQUEST_LIMIT")
 
 	return config
 }

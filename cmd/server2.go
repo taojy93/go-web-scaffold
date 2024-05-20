@@ -24,7 +24,7 @@ var server2Cmd = &cobra.Command{
 		// Initialize database
 		database.InitDB(cfg.MySQLDSN)
 		database.InitRedis(cfg.RedisAddr, cfg.RedisPassword, cfg.RedisDB)
-		kafka.InitKafka(cfg.KafkaBrokers)
+		// kafka.InitKafka(cfg.KafkaBrokers)
 
 		// Initialize repositories, services, and handlers
 		newsRepo := repository.NewNewsRepository(database.DB)
@@ -45,7 +45,7 @@ var server2Cmd = &cobra.Command{
 			newsGroup := v1.Group("/news")
 			{
 				newsGroup.POST("/", newsHandler.CreateNews)
-				newsGroup.GET("/:id", newsHandler.GetNewsByID).Use(middleware.LimitMiddleware)
+				newsGroup.GET("/:id", middleware.RateLimiterMiddleware(cfg.RequestLimit, cfg.WindowsSize, cfg.BucketCount), newsHandler.GetNewsByID)
 				newsGroup.GET("/", newsHandler.GetAllNews)
 				newsGroup.PUT("/", newsHandler.UpdateNews)
 				newsGroup.DELETE("/:id", newsHandler.DeleteNews)
