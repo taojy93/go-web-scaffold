@@ -1,7 +1,7 @@
 package kafka
 
 import (
-	"go-web-scaffold/internal/logging"
+	"go-web-scaffold/internal/pkg/logging"
 
 	"github.com/IBM/sarama"
 	"go.uber.org/zap"

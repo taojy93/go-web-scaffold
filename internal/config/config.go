@@ -2,7 +2,7 @@
 package config
 
 import (
-	"go-web-scaffold/internal/logging"
+	"go-web-scaffold/internal/pkg/logging"
 	"log"
 	"time"
 

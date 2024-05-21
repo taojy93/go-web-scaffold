@@ -3,7 +3,7 @@ package main
 
 import (
 	"go-web-scaffold/cmd"
-	"go-web-scaffold/internal/logging"
+	"go-web-scaffold/internal/pkg/logging"
 )
 
 func main() {

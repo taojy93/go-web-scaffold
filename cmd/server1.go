@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"go-web-scaffold/internal/config"
-	"go-web-scaffold/internal/database"
 	"go-web-scaffold/internal/handlers"
-	"go-web-scaffold/internal/kafka"
-	"go-web-scaffold/internal/logging"
+	"go-web-scaffold/internal/pkg/database"
+	"go-web-scaffold/internal/pkg/kafka"
+	"go-web-scaffold/internal/pkg/logging"
 	"go-web-scaffold/internal/repository"
 	"go-web-scaffold/internal/service"
 
