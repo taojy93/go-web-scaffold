@@ -4,6 +4,7 @@ import (
 	"io"
 	"net/http"
 	"strconv"
+	"time"
 
 	"go-web-scaffold/internal/models"
 	"go-web-scaffold/internal/response"
@@ -53,15 +54,31 @@ func (h *NewsHandler) GetNewsByID(c *gin.Context) {
 }
 
 func (h *NewsHandler) GetAllNews(c *gin.Context) {
+
+	c.Writer.Header().Set("Content-Type", "text/event-stream")
+	c.Writer.Header().Set("Cache-Control", "no-cache")
+	c.Writer.Header().Set("Connection", "keep-alive")
+
 	newsList, err := h.newsService.GetAllNews()
 	if err != nil {
 		response.JSONResponse(c, http.StatusInternalServerError, response.Error(http.StatusInternalServerError, "Failed to get news list"))
 		return
 	}
+	// 获取 http.Flusher 接口以便刷新缓冲区
+	flusher, ok := c.Writer.(http.Flusher)
+	if !ok {
+		response.JSONResponse(c, http.StatusInternalServerError, response.Error(http.StatusInternalServerError, "Streaming unsupported!"))
+		return
+	}
 
 	c.Stream(func(w io.Writer) bool {
 		for _, news := range newsList {
-			c.SSEvent("news", news)
+			// 使用SSEvent方法发送事件
+			c.SSEvent("data: ", news)
+			// 刷新缓冲区，确保数据立即发送到客户端
+			flusher.Flush()
+			// 为了演示效果，每条数据之间加一个延时
+			time.Sleep(1 * time.Second)
 		}
 		return false
 	})
